@@ -1,3 +1,4 @@
+using Application;
 using Serilog;
 using WebApi;
 
@@ -11,6 +12,7 @@ Log.Logger = new LoggerConfiguration()
 builder.Host.UseSerilog();
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
