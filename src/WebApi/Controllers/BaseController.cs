@@ -1,7 +1,7 @@
+using Domain.Common;
 using Domain.Notification;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Obralean.Portal.Domain.Common;
 namespace WebApi.Controllers;
 
 [ApiController]

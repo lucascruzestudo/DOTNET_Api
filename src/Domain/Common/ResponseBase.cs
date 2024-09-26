@@ -1,4 +1,4 @@
-namespace Obralean.Portal.Domain.Common;
+namespace Domain.Common;
 public class ResponseBase<T>
 {
     public bool IsSuccess => !Errors.Any();
