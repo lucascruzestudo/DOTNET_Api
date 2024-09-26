@@ -1,6 +1,4 @@
-using Application.Common.Behaviors;
 using Domain.Notification;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;

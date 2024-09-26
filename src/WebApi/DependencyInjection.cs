@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
 using Infrastructure.Persistence;
-using WebApi.Middlewares;
 
 namespace WebApi;
 
