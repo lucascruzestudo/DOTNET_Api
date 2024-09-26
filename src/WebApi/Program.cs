@@ -1,19 +1,16 @@
-using Microsoft.EntityFrameworkCore;
-using StackExchange.Redis;
-using Npgsql;
-using Infrastructure.Persistence;
+using Serilog;
+using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .CreateLogger();
 
-var redisConnectionString = builder.Configuration.GetSection("Redis")["Connection"];
-if (string.IsNullOrEmpty(redisConnectionString))
-{
-    throw new InvalidOperationException("Redis connection string is not configured.");
-}
+builder.Host.UseSerilog();
 
+builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,7 +35,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
-        c.RoutePrefix = string.Empty; // Isso permite que você acesse o Swagger em http://localhost:5000/
+        c.RoutePrefix = string.Empty;
     });
 }
 
