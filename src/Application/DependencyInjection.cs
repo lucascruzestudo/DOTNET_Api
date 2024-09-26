@@ -1,3 +1,5 @@
+using Application.Common.Behaviors;
+using Domain.Notification;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,8 +12,8 @@ namespace Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
-            services.AddValidatorsFromAssemblyContaining<IValidator>();
+            services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+            services.AddScoped<INotificationHandler<DomainSuccessNotification>, DomainSuccessNotificationHandler>();
 
             return services;
         }

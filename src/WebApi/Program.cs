@@ -1,6 +1,7 @@
 using Application;
 using Serilog;
 using WebApi;
+using WebApi.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,24 @@ builder.Host.UseSerilog();
 
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+    {
+        options.Filters.Add<RequireProducesResponseTypeFilter>();
+        options.Filters.Add<RequireSwaggerOperationSummaryFilter>();
+    });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "API V1",
+        Version = "v1"
+    });
+
+    options.EnableAnnotations();
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
